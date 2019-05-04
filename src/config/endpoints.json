@@ -1,0 +1,13 @@
+{
+    "session"   :   "api/v1/session",
+    "signup"    :   "api/v1/signup",
+    "signin"    :   "api/v1/signin",
+    "signout"   :   "api/v1/signout",
+    "recovery"  :   "api/v1/recovery",
+    "member"    :   "api/v1/member",
+    "photo"     :   "api/v1/photo",
+    "video"     :   "api/v1/video",
+    "password"  :   "api/v1/password",
+    "dog"       :   "api/v1/dog",
+    "doglookup" :   "api/v1/dog-lookup"
+}

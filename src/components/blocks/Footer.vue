@@ -55,7 +55,7 @@
             <div class="column">
                 <p>版权声明：如果来函说明本网站提供内容系本人或法人版权所有.<br />本网站在核实后，有权先行撤除，以保护版权拥有者的权益。未经授权禁止链接、复制或建立</p>
             </div>
-            <div class="column">
+            <div class="column closure-copyright">
                 <p>© {{year}} 北京我爱工作犬网传播文化有限公司 京ICP备16012145号-1</p>
             </div>
         </div>
@@ -80,3 +80,41 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+    .footer {
+        padding: 0;
+        background-color: #9b6944;
+        p, ul, li, a, strong{
+            color: #ffffff;
+        }
+        ul li {
+            line-height: 2rem;
+        }
+        p a {
+            padding-left: 1rem;
+        }
+
+        .footer-menu{
+            background-color: #9b6944;
+            padding: 3rem 0;
+        }
+
+        .closure {
+            max-width: unset;
+            width: 100%;
+            background-color: #331d14;
+            .columns {
+                max-width: 1344px;
+                margin: auto;
+                .column {
+                    padding:1rem 0;
+                }
+                .closure-copyright {
+                    text-align: right;
+                    margin: auto;
+                }
+            }
+        }
+    }
+
+</style>

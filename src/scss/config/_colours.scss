@@ -1,11 +1,15 @@
-$eeri-black     :   #201D1F;
-$white          :   #ffffff;
-$max-yellow-red :   #E6C04C;
-$donkey-brown   :   #65562D;
-$cafe-noir      :   #423826;
+$eeri-black: #201D1F;
+$white: #ffffff;
+$max-yellow-red: #E6C04C;
+$donkey-brown: #65562D;
+$primary-brown: #EFE1CF;
+$primary-text-brown: #C8AC8F;
+$secondary-brown: #FDFBF9;
+$cafe-noir: #423826;
 
-$grey-darker    :   $eeri-black;
-$gold           :   $max-yellow-red;
+$grey-darker: $eeri-black;
+$gold: $max-yellow-red;
+$danger: red; //need to change
 
 .color {
     &-is {

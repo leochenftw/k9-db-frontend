@@ -3,7 +3,7 @@
         <div class="thumbnail-stripe latest-photos container">
             <h2 class="title is-4">{{title}}</h2>
             <Carousel :perPage="itemPrePage" :mouseDrag=false :navigationEnabled="true" :loop=true :paginationEnabled="false" class="is-flex">
-                <Slide v-for="i in 5">
+                <Slide v-for="i in 5" :key="i">
                     <Thumbnail/>
                 </Slide>
             </Carousel>

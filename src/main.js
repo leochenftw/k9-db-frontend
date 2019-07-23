@@ -22,7 +22,7 @@ axios.defaults.withCredentials  =   true;
 global._                        =   _;
 global.NProgress                =   NProgress;
 global.axios                    =   axios;
-global.base_url                 =   location.hostname == 'localhost' ? 'https://k9-db.local/' : '';
+global.base_url                 =   location.hostname == 'localhost' ? 'https://k9solution.leochen.co.nz/' : '';
 global.endpoints                =   require('@/config/endpoints');
 global.csrf                     =   null;
 

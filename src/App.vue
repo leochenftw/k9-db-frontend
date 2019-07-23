@@ -49,7 +49,7 @@ export default {
 }
 </script>
 <style>
-@import 'css/styles.css';
+@import './css/styles.css';
 @import '../node_modules/lightbox2/dist/css/lightbox.min.css';
 
 .is-relative {

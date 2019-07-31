@@ -50,13 +50,15 @@
             </div>
         </div>
     </div>
-    <div class="container closure">
-        <div class="columns">
-            <div class="column">
-                <p>版权声明：如果来函说明本网站提供内容系本人或法人版权所有.<br />本网站在核实后，有权先行撤除，以保护版权拥有者的权益。未经授权禁止链接、复制或建立</p>
-            </div>
-            <div class="column closure-copyright">
-                <p>© {{year}} 北京我爱工作犬网传播文化有限公司 京ICP备16012145号-1</p>
+    <div class="closure">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <p>版权声明：如果来函说明本网站提供内容系本人或法人版权所有.<br />本网站在核实后，有权先行撤除，以保护版权拥有者的权益。未经授权禁止链接、复制或建立</p>
+                </div>
+                <div class="column has-text-right">
+                    <p>© {{year}} 北京我爱工作犬网传播文化有限公司 京ICP备16012145号-1</p>
+                </div>
             </div>
         </div>
     </div>
@@ -100,19 +102,14 @@ export default {
         }
 
         .closure {
-            max-width: unset;
-            width: 100%;
+            padding: 24px 0;
+            font-size: 12px;
             background-color: #331d14;
             .columns {
-                max-width: 1344px;
-                margin: auto;
-                .column {
-                    padding:1rem 0;
-                }
-                .closure-copyright {
-                    text-align: right;
-                    margin: auto;
-                }
+                align-items: center;
+            }
+            p {
+                color: #c8ac8f;
             }
         }
     }

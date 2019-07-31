@@ -1,14 +1,7 @@
 <template>
     <div class="section">
         <div class="container">
-            <div class="columns is-gapless">
-                <div class="column">
-                    <h2 class="title is-3">赛事新闻活动</h2>
-                </div>
-                <div class="column has-text-right">
-                    <router-link to="/news">更多</router-link>
-                </div>
-            </div>
+            <h2 class="title is-4"><span>赛事新闻活动</span> <router-link to="/news">更多</router-link></h2>
             <div class="columns">
                 <NewsItemGrid :grid_size="'is-half'" :source="item" :key="key" v-for="item,key in items" />
             </div>
@@ -50,3 +43,35 @@ export default
     }
 }
 </script>
+<style lang="scss" scoped>
+.section {
+    h2.title {
+        margin-bottom: 24px;
+        border-bottom: 1px solid #f0e2d0;
+        position: relative;
+        span {
+            padding-bottom: 24px;
+            display: inline-block;
+            position: relative;
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                height: 2px;
+                width: 100%;
+                background-color: #a3673c;
+                left: 0;
+            }
+        }
+
+        a {
+            display: block;
+            position: absolute;
+            right: 1rem;
+            font-size: 1rem;
+            color: #371c12;
+            top: 0.5em;
+        }
+    }
+}
+</style>

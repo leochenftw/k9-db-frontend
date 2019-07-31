@@ -20,7 +20,7 @@
     }
 </script>
 <style lang="scss" scoped>
-    @import "../../../scss/styles";
+    @import "../../../scss/config/colours";
     .search-field {
             position: relative;
             .input {

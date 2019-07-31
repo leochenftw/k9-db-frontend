@@ -22,7 +22,7 @@
             </slide>
         </carousel>
         <ThumbnailStripe />
-        <ThumbnailStripe :title="'最新视频'" :itemPrePage="4" />
+        <ThumbnailStripe :title="'最新视频'" :itemPrePage="5" />
         <Ads />
         <NewsSection />
         <ThumbnailStripe :title="'人才推荐'" :itemPrePage="5" />

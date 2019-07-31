@@ -7,7 +7,7 @@
             </figcaption>
         </figure>
         <div class="thumbnail__member">
-            <img src="@/assets/ico-account.svg" /> {{member}}
+            <img src="@/assets/ico-account-lite.svg" /> <span>{{member}}</span>
         </div>
     </a>
 </template>
@@ -26,27 +26,27 @@ export default
 }
 </script>
 <style lang="scss" scoped>
+
     .thumbnail-holder {
         .thumbnail {
+            display: block;
             border: 1px solid #c1a284;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            /*padding-top: 0.75rem;*/
-            .thumbnail__image {
-                margin: auto;
+            padding: 7px;
+            margin-bottom: 8px;
+            &__image {
                 width: 100%;
-                padding: 0.5rem;
             }
-            .thumbnail__viewed {
+            &__viewed {
                 text-align: right;
-                padding:0 0.5rem;
-                color: #c1a284;
+                color: #c8ac8f;
             }
-        }
-        .thumbnail__member {
-            color: #c1a284;
-            padding:0.25rem 0.5rem;
+
+            &__member {
+                color: #371c12;
+                img {
+                    transform: translateY(3px);
+                }
+            }
         }
     }
 </style>

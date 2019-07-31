@@ -1,14 +1,14 @@
 <template>
-    <section class="section">
-        <div class="thumbnail-stripe latest-photos container">
-            <h2 class="title is-4">{{title}}</h2>
-            <Carousel :perPage="itemPrePage" :mouseDrag=false :navigationEnabled="true" :loop=true :paginationEnabled="false" class="is-flex">
-                <Slide v-for="i in 5" :key="i">
-                    <Thumbnail/>
-                </Slide>
-            </Carousel>
-        </div>
-    </section>
+<div class="section">
+    <div class="thumbnail-stripe latest-photos container">
+        <h2 class="title is-4"><span>{{title}}</span></h2>
+        <Carousel :perPage="itemPrePage" :mouseDrag=false :navigationEnabled="true" :loop=true :paginationEnabled="false" class="is-flex">
+            <Slide v-for="i in 5" :key="i">
+                <Thumbnail/>
+            </Slide>
+        </Carousel>
+    </div>
+</div>
 </template>
 
 <script>
@@ -34,8 +34,34 @@
         }
     }
 </script>
-<style>
-    .latest-photos.thumbnail-stripe {
+<style lang="scss">
+.VueCarousel-inner {
+    margin-left: -10px;
+    margin-right: -10px;
+}
 
+.VueCarousel-slide {
+    padding: 10px;
+}
+
+.thumbnail-stripe {
+    .title {
+        margin-bottom: 8px;
+        border-bottom: 1px solid #f0e2d0;
+        span {
+            padding-bottom: 24px;
+            display: inline-block;
+            position: relative;
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                height: 2px;
+                width: 100%;
+                background-color: #a3673c;
+                left: 0;
+            }
+        }
     }
+}
 </style>

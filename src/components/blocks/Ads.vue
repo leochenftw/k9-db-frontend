@@ -1,15 +1,15 @@
 <template>
     <div class="promo-wrapper">
-        <div class="promo">
-            <div class="promo-body">
-                <div class="promo-photo">
+        <div class="promo container">
+            <div class="promo-body columns">
+                <div class="promo-photo column">
                     <img src="@/assets/puppy.png"/>
                 </div>
-                <div class="promo-content">
-                    <h2 class="title is-4 promo-title">{{title}}</h2>
+                <div class="promo-content column has-text-centered">
+                    <h2 class="title is-4 promo-title"><span>{{title}}</span></h2>
                     <div class="content" v-html="content"></div>
-                    <div class="action has-text-centered promo-action button">
-                        <a :href="link.url" target="_blank">{{link.label}}</a>
+                    <div class="action has-text-centered promo-action">
+                        <a class="button is-white" :href="link.url" target="_blank">{{link.label}}</a>
                     </div>
                 </div>
             </div>
@@ -33,44 +33,52 @@
     }
 </script>
 <style lang="scss" scoped>
-    .promo-wrapper .promo {
+    .promo-wrapper {
+        margin: 3rem auto;
         background-color: #c1a284;
-        .promo-body {
-            display: flex;
-            max-width: 960px;
-            margin: auto;
-            padding: 0.75rem;
-            .promo-photo img{
-                max-width: unset;
-
+        .promo {
+            &.container {
+                max-width: 960px;
             }
-            .promo-content {
-                padding: 2rem 8rem;
+            padding: 20px 0;
+            &-photo {
+                position: relative;
                 text-align: center;
-                .promo-title {
-                    color: #fff;
-                    display: inline-block;
-                    position: relative;
-                    &:after {
-                        position: absolute;
-                        content: '';
-                        height: 3px;
-                        bottom: -8px;
-                        margin: 0;
-                        left: 0;
-                        right: 0;
-                        width: 100%;
-                        background: #fff;
+                img {
+                    display: block;
+                    position: absolute;
+                    bottom: -20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+
+            &-content {
+                .promo {
+                    &-title {
+                        margin-top: .75rem;
+                        font-size: 30px;
+                        color: #fff;
+                        letter-spacing: 2px;
+                        span {
+                            display: inline-block;
+                            padding-bottom: 8px;
+                            border-bottom: 3px solid #fff;
+                        }
                     }
                 }
-                .content {
 
+                .content {
+                    color: #371c12;
+                    line-height: 2;
+                    padding-left: 3rem;
+                    padding-right: 3rem;
                 }
-                .promo-action{
-                    padding: 1rem 1.25rem;
+
+                .action {
+                    margin-bottom: 1.5rem;
                 }
             }
         }
-
     }
 </style>

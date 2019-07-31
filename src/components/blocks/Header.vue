@@ -37,11 +37,11 @@
                 </div>
             </div>
         </div>
-        <nav class="container navbar is-transparent">
+        <nav class="container navbar">
             <div id="mobile-menu"
-                 :class="{'justify-content-centered': true, 'navbar-menu': true, 'is-active': mobile_menu_is_active }">
-                <router-link class="navbar-item" :to="item.url" :key="key" v-for="item, key in navigation">
-                    {{item.title}}
+                 :class="{'navbar-menu': true, 'is-active': mobile_menu_is_active }">
+                <router-link class="navbar-item" :to="item.url" :key="key" v-for="item, key in site_data.navigation">
+                    {{item.label}}
                 </router-link>
             </div>
         </nav>
@@ -52,6 +52,7 @@
 
     export default {
         name: 'Header',
+        props: ['site_data'],
         components: {
             SearchField
         },
@@ -61,27 +62,6 @@
                 mobile_menu_is_active: false,
                 logged: false,
                 userName: 'gongzuoquan_1234',
-                navigation: [{
-                    title: '首页',
-                    url: '/'
-                },
-                    {
-                        title: '繁殖信息',
-                        url: '/'
-                    },
-                    {
-                        title: '犬只',
-                        url: '/'
-                    },
-                    {
-                        title: '视频',
-                        url: '/'
-                    },
-                    {
-                        title: '照片',
-                        url: '/'
-                    }
-                ]
             };
         },
         methods: {
@@ -115,7 +95,7 @@
     }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/styles";
+    @import "../../scss/config/colours";
 
     .header-section {
         padding: 0;
@@ -143,22 +123,46 @@
             }
         }
         .navbar {
-            .navbar-menu {
-                display: flex;
-                .navbar-item {
-                    flex: 1 1 0;
-                    flex-direction:column;
-                    justify-content:space-around;
-                    border: solid $primary-text-brown 1px;
-                    color: $primary-text-brown;
-                    &:hover,&.is-active {
-                        background-color: $secondary-brown !important;
-                        color: $donkey-brown;
-                        font-weight: bold;
-                    }
+            &-menu {
+
+            }
+
+            &-item {
+                justify-content: center;
+                flex-basis: 0;
+                flex-grow: 1;
+                flex-shrink: 1;
+                border: 1px solid $primary-text-brown;
+                color: $primary-text-brown;
+                &:hover,
+                &.is-active {
+                    background-color: #f0e2d0;
+                    color: $donkey-brown;
+                    font-weight: bold;
+                }
+                &:not(:last-child) {
+                    border-right: none;
                 }
             }
         }
+        // .navbar {
+        //     .navbar-menu {
+        //         display: flex;
+        //         .navbar-item {
+        //             flex: 1 1 0;
+        //             flex-direction:column;
+        //             justify-content:space-around;
+        //             border: solid $primary-text-brown 1px;
+        //             color: $primary-text-brown;
+        //             &:hover,
+        //             &.is-active {
+        //                 background-color: $secondary-brown !important;
+        //                 color: $donkey-brown;
+        //                 font-weight: bold;
+        //             }
+        //         }
+        //     }
+        // }
     }
 
 </style>

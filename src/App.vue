@@ -1,7 +1,7 @@
 <template>
 <div id="app" :class="[class_name, {'loaded': loaded}]" v-if="site_data">
     <Header :site_data="site_data" />
-    <router-view />
+    <router-view :site_data="site_data" />
     <Footer />
     <ModalMessage />
 </div>
@@ -109,16 +109,11 @@ export default {
         $(window).unbind('focus').on('focus', function(e) {
             me.get_session();
         });
-        me.get_session();
+        me.$bus.$on('triggerSessionUpdate', this.get_session);
         this.get_page_data(this.$route.fullPath);
     },
     mounted() {
         let me = this;
-        $(window).unbind('focus').on('focus', function(e) {
-            me.get_session();
-        });
-        me.$bus.$off('triggerSessionUpdate');
-        me.$bus.$on('triggerSessionUpdate', this.get_session);
     },
     beforeDestory() {
         this.$bus.$off('triggerSessionUpdate');
@@ -159,6 +154,7 @@ export default {
 
             me.pagetitle    =   resp.data.menu_title;
             me.site_data    =   resp.data;
+            csrf            =   resp.data.session.csrf;
 
             me.$nextTick().then(() => {
                 me.loaded =   true;
@@ -167,7 +163,7 @@ export default {
     }
 }
 </script>
-<style>
+<style lang="scss">
 @import './css/styles.css';
 @import '../node_modules/lightbox2/dist/css/lightbox.min.css';
 
@@ -178,5 +174,23 @@ export default {
 .is-marginless-vertical {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+}
+
+.button {
+    height: auto;
+    &.is {
+        &-brown {
+            background-color: #371c12;
+            color: #f0e2d0;
+            padding: 10px 30px;
+            border: none;
+        }
+    }
+}
+
+.home-promo-carousel {
+    .VueCarousel-inner {
+        margin: 0;
+    }
 }
 </style>

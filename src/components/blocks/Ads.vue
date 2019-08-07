@@ -1,39 +1,32 @@
 <template>
-    <div class="promo-wrapper">
-        <div class="promo container">
-            <div class="promo-body columns">
-                <div class="promo-photo column">
-                    <img src="@/assets/puppy.png"/>
-                </div>
-                <div class="promo-content column has-text-centered">
-                    <h2 class="title is-4 promo-title"><span>{{title}}</span></h2>
-                    <div class="content" v-html="content"></div>
-                    <div class="action has-text-centered promo-action">
-                        <a class="button is-white" :href="link.url" target="_blank">{{link.label}}</a>
-                    </div>
+<a :href="promo.link.url" class="promo-wrapper" target="_blank">
+    <div class="promo container">
+        <div class="promo-body columns">
+            <div class="promo-photo column">
+                <!-- <img src="@/assets/puppy.png"/> -->
+                <img :src="promo.image.url" />
+            </div>
+            <div class="promo-content column has-text-centered">
+                <h2 class="title is-4 promo-title"><span>{{promo.title}}</span></h2>
+                <div class="content" v-html="promo.content"></div>
+                <div class="action has-text-centered promo-action" v-if="promo.link && promo.link.url">
+                    <span class="button is-white">{{promo.link.title}}</span>
                 </div>
             </div>
         </div>
     </div>
+</a>
 </template>
 
 <script>
-    export default {
-        name: 'Ads',
-        data () {
-            return {
-                title: '台湾工作犬训练学校',
-                content: '<p>針對狗狗的個性及主人的需求提供整套完整的訓練課程，讓您的愛犬不再是您的負擔，讓他可以融入社會、融入家庭，成為您生活的伴侶。</p>',
-                link: {
-                    label: '了解更多',
-                    url: '#'
-                }
-            };
-        }
-    }
+export default {
+    name    :   'Ads',
+    props   :   ['promo']
+}
 </script>
 <style lang="scss" scoped>
     .promo-wrapper {
+        display: block;
         margin: 3rem auto;
         background-color: #c1a284;
         .promo {
@@ -48,8 +41,7 @@
                     display: block;
                     position: absolute;
                     bottom: -20px;
-                    left: 50%;
-                    transform: translateX(-50%);
+                    right: 10%;
                 }
             }
 

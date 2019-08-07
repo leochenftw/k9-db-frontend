@@ -60,7 +60,7 @@
             return {
                 base_prefix: global.base_prefix,
                 mobile_menu_is_active: false,
-                logged: false,
+                logged: this.site_data.session.member ? true : false,
                 userName: 'gongzuoquan_1234',
             };
         },
@@ -145,24 +145,6 @@
                 }
             }
         }
-        // .navbar {
-        //     .navbar-menu {
-        //         display: flex;
-        //         .navbar-item {
-        //             flex: 1 1 0;
-        //             flex-direction:column;
-        //             justify-content:space-around;
-        //             border: solid $primary-text-brown 1px;
-        //             color: $primary-text-brown;
-        //             &:hover,
-        //             &.is-active {
-        //                 background-color: $secondary-brown !important;
-        //                 color: $donkey-brown;
-        //                 font-weight: bold;
-        //             }
-        //         }
-        //     }
-        // }
     }
 
 </style>

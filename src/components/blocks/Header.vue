@@ -2,9 +2,9 @@
     <header id="header" class="section header-section">
         <div class="container top-stripe">
             <div class="columns">
-                <div class="column"><i class="fab fa-weixin"></i> {{userName}}</div>
+                <div class="column"><i class="fab fa-weixin"></i> {{site_data.siteconfig.contact.wechat.official_account}}</div>
                 <div class="column is-narrow">
-                    <span>欢迎信息</span>
+                    <span v-if="site_data.siteconfig.welcome_message">{{site_data.siteconfig.welcome_message}}</span>
                     <template v-if="!logged">
                         <router-link :to="{ name: 'Signup' }">注册</router-link>
                         <router-link :to="{ name: 'Signin' }">登录</router-link>
@@ -40,7 +40,7 @@
         <nav class="container navbar">
             <div id="mobile-menu"
                  :class="{'navbar-menu': true, 'is-active': mobile_menu_is_active }">
-                <router-link class="navbar-item" :to="item.url" :key="key" v-for="item, key in site_data.navigation">
+                <router-link :class="['navbar-item', {'is-active': item.active}]" :to="item.url" :key="key" v-for="item, key in site_data.navigation">
                     {{item.label}}
                 </router-link>
             </div>
@@ -58,10 +58,8 @@
         },
         data () {
             return {
-                base_prefix: global.base_prefix,
                 mobile_menu_is_active: false,
-                logged: this.site_data.session.member ? true : false,
-                userName: 'gongzuoquan_1234',
+                logged: this.site_data.session.member ? true : false
             };
         },
         methods: {
@@ -107,6 +105,12 @@
                 margin: auto 0;
                 .column {
                     padding: 0.6rem;
+                    span {
+                        margin-right: 1.5rem;
+                    }
+                    a {
+                        color: #371c12;
+                    }
                 }
             }
         }
@@ -133,10 +137,13 @@
                 flex-grow: 1;
                 flex-shrink: 1;
                 border: 1px solid $primary-text-brown;
+                .homepage & {
+                    border-bottom: none;
+                }
                 color: $primary-text-brown;
                 &:hover,
                 &.is-active {
-                    background-color: #f0e2d0;
+                    background-color: #f0e2d0 !important;
                     color: $donkey-brown;
                     font-weight: bold;
                 }

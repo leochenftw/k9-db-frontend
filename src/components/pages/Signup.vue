@@ -66,6 +66,7 @@
 <script>
 export default {
     name    :   'Signup',
+    props   :   ['site_data'],
     data() {
         return {
             show_pass       :   false,
@@ -85,6 +86,12 @@ export default {
                 member_id       :   false,
                 validation_key  :   false
             }
+        }
+    },
+    created()
+    {
+        if (this.site_data && this.site_data.member) {
+            return this.$router.replace('/member');
         }
     },
     computed    :   {

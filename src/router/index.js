@@ -5,6 +5,7 @@ import Signin from '@/components/pages/Signin'
 import Signup from '@/components/pages/Signup'
 import Signout from '@/components/pages/Signout'
 import Dashboard from '@/components/pages/Dashboard'
+import Generic from '@/components/pages/Generic'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ export default new Router({
             path: '/member/:section/:action/:id',
             name: 'DashboardTargetedAction',
             component: Dashboard
+        },
+        {
+            path: '*',
+            name: 'Generic',
+            component: Generic
         }
     ]
 })

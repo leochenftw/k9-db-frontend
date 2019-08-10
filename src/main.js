@@ -9,6 +9,7 @@ import _ from 'lodash';
 
 require('lightbox2');
 require('@/utils/utilities');
+require('jquery-visible');
 // window.USE_STREAM_UPLOAD = true;
 // require('@/utils/youku');
 require("babel-polyfill"); // Enable promises on IE11 etc

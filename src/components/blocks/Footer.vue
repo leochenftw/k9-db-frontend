@@ -6,46 +6,62 @@
                 <p class="title is-5">联系我们</p>
                 <ul>
                     <li>
-                        <p><strong>工作邮箱</strong></p>
-                        <p><a href="mailto:woaigongzuoquan@163.com">woaigongzuoquan@163.com</a></p>
+                        <p><i class="fas fa-paper-plane"></i> <strong>工作邮箱</strong></p>
+                        <p><a :href="'mailto:' + site_data.siteconfig.contact.email">{{site_data.siteconfig.contact.email}}</a></p>
                     </li>
                     <li>
-                        <p><strong>联系电话</strong></p>
-                        <p><a href="tel:13000000000">13000000000</a></p>
+                        <p><i class="fas fa-phone-alt"></i> <strong>联系电话</strong></p>
+                        <p><a :href="'tel:' + site_data.siteconfig.contact.phone">{{site_data.siteconfig.contact.phone}}</a></p>
                     </li>
                     <li>
-                        <p><strong>微信号</strong></p>
-                        <p><a href="#">gongzuoquan_1234</a></p>
+                        <p><i class="fab fa-weixin"></i> <strong>微信号</strong></p>
+                        <p><a>{{site_data.siteconfig.contact.wechat.official_account}}</a></p>
                     </li>
                 </ul>
             </div>
             <div class="column is-3">
                 <p class="title is-5">快速连接</p>
-                <ul>
-                    <li><a href="#">&gt; 关于我们</a></li>
-                    <li><a href="#">&gt; 帮助中心</a></li>
-                    <li><a href="#">&gt; 广告投放</a></li>
-                    <li><a href="#">&gt; 隐私条款及政策</a></li>
-                    <li><a href="#">&gt; 网站地图</a></li>
+                <ul class="footer-menu__menu">
+                    <li v-for="item, i in site_data.siteconfig.menu">
+                        <router-link :to="item.url"><i class="fas fa-angle-right"></i> {{item.title}}</router-link>
+                    </li>
                 </ul>
             </div>
             <div class="column is-3">
                 <p class="title is-5">我的账户</p>
-                <ul>
-                    <li><a href="#">&gt; 登录</a></li>
-                    <li><a href="#">&gt; 个人中心</a></li>
-                    <li><a href="#">&gt; 我的视频</a></li>
-                    <li><a href="#">&gt; 我的照片</a></li>
-                    <li><a href="#">&gt; 已发布的繁殖信息</a></li>
+                <ul class="footer-menu__menu">
+                    <li v-if="!site_data.member">
+                        <router-link :to="'/signin'">
+                            <i class="fas fa-angle-right"></i> 登录
+                        </router-link>
+                    </li>
+                    <li v-else>
+                        <router-link :to="'/member'">
+                            <i class="fas fa-angle-right"></i> 个人中心
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="'/member/video'">
+                            <i class="fas fa-angle-right"></i> 我的视频
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="'/member/photo'">
+                            <i class="fas fa-angle-right"></i> 我的照片
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link :to="'/member/breed'">
+                            <i class="fas fa-angle-right"></i> 已发布的繁殖信息
+                        </router-link>
+                    </li>
                 </ul>
             </div>
-            <div class="column is-3">
+            <div class="column is-3" v-if="site_data.siteconfig.contact.wechat.qr_code">
                 <p class="title is-5">二维码</p>
                 <div class="content">
                     <p>扫描二维码，关注微信公众平台</p>
-                    <p>
-                        <img src="https://via.placeholder.com/150x150.png" />
-                    </p>
+                    <figure><img :src="site_data.siteconfig.contact.wechat.qr_code.thumb" /></figure>
                 </div>
             </div>
         </div>
@@ -68,7 +84,7 @@
 <script>
 export default {
     name: 'Footer',
-    props: [],
+    props: ['site_data'],
     components: {},
     watch: {
 
@@ -86,19 +102,65 @@ export default {
     .footer {
         padding: 0;
         background-color: #9b6944;
-        p, ul, li, a, strong{
+        p, strong{
             color: #ffffff;
         }
-        ul li {
-            line-height: 2rem;
+
+        ul {
+            li {
+                line-height: 2rem;
+                color: #e6e6e6;
+                i {
+                    width: 24px;
+                }
+                a {
+                    color: #e6e6e6;
+                }
+            }
+
+            &.footer-menu__menu {
+                li {
+                    i {
+                        width: 16px;
+                    }
+                }
+            }
         }
-        p a {
-            padding-left: 1rem;
+
+        p {
+            &.title {
+                &:after {
+                    margin-top: 0.5em;
+                    content: '';
+                    display: block;
+                    width: 1.5em;
+                    height: 2px;
+                    background-color: #fff;
+                }
+            }
+            a {
+                padding-left: 28px;
+                display: inline-block;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        figure {
+            max-width: 124px;
+            margin: 0;
+            img {
+                display: block;
+            }
         }
 
         .footer-menu{
             background-color: #9b6944;
             padding: 3rem 0;
+            @media screen and (max-width: 1023px) {
+                padding: 3rem 1.5rem;
+            }
         }
 
         .closure {

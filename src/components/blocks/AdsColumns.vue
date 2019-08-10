@@ -3,7 +3,7 @@
     <div class="container">
         <div class="columns is-multiline">
             <div class="column is-half" v-for="item, i in promo">
-                <a class="is-block" :href="item.link.url" target="_blank">
+                <a class="ads-item is-block" :href="item.link.url" target="_blank">
                     <img :src="item.image.url" :alt="item.image.title" />
                 </a>
             </div>
@@ -19,3 +19,10 @@ export default
     props   :   ['promo']
 }
 </script>
+<style lang="scss" scoped>
+.ads-item {
+    img {
+        display: block;
+    }
+}
+</style>

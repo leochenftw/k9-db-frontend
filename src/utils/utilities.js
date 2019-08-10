@@ -29,6 +29,7 @@ String.prototype.toDollar = function toDollar(digits) {
 
 Number.prototype.toDollar = function toDollar(digits) {
     var n = this;
+    n = Math.round(n * 100) / 100;
     digits = (digits === null || digits === undefined) ? 2 : digits;
     return '$' + n.toFixed(digits).kmark();
 };
@@ -65,40 +66,6 @@ Date.prototype.now = function() {
 Date.prototype.yyyymmdd = function() {
     return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit();
 }
-
-String.prototype.toFilesize =   function bytesToSize() {
-    var sizes   =   ['Bytes', 'K', 'M', 'G', 'T'],
-        bytes   =   parseFloat(this);
-    if (bytes == 0) return '0B';
-    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-};
-
-Number.prototype.toFilesize =   function bytesToSize() {
-    var sizes   =   ['Bytes', 'K', 'M', 'G', 'T'],
-        bytes   =   this;
-    if (bytes == 0) return '0B';
-    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-};
-
-String.prototype.ltrim = function(charlist)
-{
-    if (charlist === undefined) {
-        charlist = "\s";
-    }
-
-    return this.replace(new RegExp("^[" + charlist + "]+"), "");
-};
-
-String.prototype.rtrim = function(charlist)
-{
-    if (charlist === undefined) {
-        charlist = "\s";
-    }
-
-    return this.replace(new RegExp("[" + charlist + "]+$"), "");
-};
 
 /*
  * functions
@@ -157,6 +124,24 @@ function getOrientation(file, callback) {
     reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
 }
 
+String.prototype.ltrim = function(charlist)
+{
+    if (charlist === undefined) {
+        charlist = "\s";
+    }
+
+    return this.replace(new RegExp("^[" + charlist + "]+"), "");
+};
+
+String.prototype.rtrim = function(charlist)
+{
+    if (charlist === undefined) {
+        charlist = "\s";
+    }
+
+    return this.replace(new RegExp("[" + charlist + "]+$"), "");
+};
+
 /**
  * detect IE
  * returns version of IE or false, if browser is not Internet Explorer
@@ -202,6 +187,11 @@ function detectIE() {
 }
 
 Date.prototype.nzst = function(include_time, include_second) {
+    if (isNaN(this.getTime())) {
+        console.error('Date object seems to be invalid.');
+        return 'Invalid date object';
+    }
+
     var d = this.getDate().DoubleDigit() + '/' + (this.getMonth() + 1).DoubleDigit() + '/' + this.getFullYear(),
         t = '',
         ampm = this.getHours() >= 12 ? 'pm' : 'am',
@@ -220,9 +210,13 @@ Date.prototype.nzst = function(include_time, include_second) {
 };
 
 String.prototype.nzst = function(include_time, include_second) {
-    let d = new Date(this);
+    var moment  =   require('moment'),
+        d       =   this.indexOf(' ') >= 0 ? this.replace(/ /gi, 'T') : this;
+    if (!include_time) {
+        return moment(d).format('DD/MM/YYYY');
+    }
 
-    return d.nzst(include_time, include_second);
+    return moment(d).format('DD/MM/YYYY h:mm:ss a');
 };
 
 Number.prototype.toDate = function() {

@@ -104,6 +104,7 @@
 <script>
 export default {
     name    :   'Signin',
+    props   :   ['site_data'],
     data() {
         return  {
             smsing          :   false,
@@ -120,6 +121,12 @@ export default {
             retry           :   0,
             recovery        :   false,
             member_id       :   null
+        }
+    },
+    created()
+    {
+        if (this.site_data && this.site_data.member) {
+            return this.$router.replace('/member');
         }
     },
     computed    :   {

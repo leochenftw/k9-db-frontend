@@ -1,32 +1,32 @@
 <template>
-    <div class="page">
-        <carousel v-if="site_data.carousel" :autoplay="true" :autoplayTimeout="3000" :autoplayHoverPause="true" :perPage="1"
-                  :navigationEnabled="true" :loop=true :paginationEnabled="false" class="home-promo-carousel">
-            <slide v-for="item, i in site_data.carousel" :key="i" class="home-promo-carousel__item">
-                <!-- <div class="home-promo-carousel__item__bg" :style="'background-image: url(' + item.image.url + ')'"></div> -->
-                <img class="home-promo-carousel__item__image" :src="item.image.url" />
-                <div class="container">
-                    <div class="home-promo-carousel__item__content">
-                        <div class="home-promo-carousel__item__subtitle title is-6">{{item.subtitle}}</div>
-                        <h2 class="home-promo-carousel__item__title title is-2">{{item.title}}</h2>
-                        <div class="home-promo-carousel__item__action" v-if="item.link">
-                            <router-link class="button is-brown" :target="item.open_in_blank ? '_blank' : '_self'" :to="item.link.url">{{item.link.title}}</router-link>
-                        </div>
+<div class="page">
+    <carousel v-if="site_data.carousel" :autoplay="true" :autoplayTimeout="3000" :autoplayHoverPause="true" :perPage="1"
+              :navigationEnabled="true" :loop=true :paginationEnabled="false" class="home-promo-carousel">
+        <slide v-for="item, i in site_data.carousel" :key="i" class="home-promo-carousel__item">
+            <!-- <div class="home-promo-carousel__item__bg" :style="'background-image: url(' + item.image.url + ')'"></div> -->
+            <img class="home-promo-carousel__item__image" :src="item.image.url" />
+            <div class="container">
+                <div class="home-promo-carousel__item__content">
+                    <div class="home-promo-carousel__item__subtitle title is-6">{{item.subtitle}}</div>
+                    <h2 class="home-promo-carousel__item__title title is-2">{{item.title}}</h2>
+                    <div class="home-promo-carousel__item__action" v-if="item.link">
+                        <router-link class="button is-brown" :target="item.open_in_blank ? '_blank' : '_self'" :to="item.link.url">{{item.link.title}}</router-link>
                     </div>
                 </div>
-                <div class="home-promo-carousel__item__dates" v-if="item.type == 'event'">
-                    <p v-if="item.dates.start"><span class="date-label">从</span> <span class="date-text">{{item.dates.start}}</span></p>
-                    <p v-if="item.dates.end"><span class="date-label">至</span> <span class="date-text">{{item.dates.end}}</span></p>
-                </div>
-            </slide>
-        </carousel>
-        <ThumbnailStripe />
-        <ThumbnailStripe :title="'最新视频'" :itemPrePage="5" />
-        <Ads v-if="mid_page_ads" :promo="mid_page_ads" />
-        <NewsSection />
-        <ThumbnailStripe :title="'人才推荐'" :itemPrePage="5" />
-        <AdsColumns v-if="bottom_page_ads" :promo="bottom_page_ads" />
-    </div>
+            </div>
+            <div class="home-promo-carousel__item__dates" v-if="item.type == 'event'">
+                <p v-if="item.dates.start"><span class="date-label">从</span> <span class="date-text">{{item.dates.start}}</span></p>
+                <p v-if="item.dates.end"><span class="date-label">至</span> <span class="date-text">{{item.dates.end}}</span></p>
+            </div>
+        </slide>
+    </carousel>
+    <ThumbnailStripe />
+    <ThumbnailStripe :title="'最新视频'" :itemPrePage="5" />
+    <Ads v-if="mid_page_ads" :promo="mid_page_ads" />
+    <NewsSection v-if="site_data.news" :list="site_data.news" />
+    <ThumbnailStripe :title="'人才推荐'" :itemPrePage="5" />
+    <AdsColumns v-if="bottom_page_ads" :promo="bottom_page_ads" />
+</div>
 </template>
 
 <script>

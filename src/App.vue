@@ -1,8 +1,8 @@
 <template>
-<div id="app" :class="[class_name, {'loaded': loaded}]" v-if="site_data">
+<div id="app" :class="[class_name, {'loaded': loaded}, site_data.pagetype]" v-if="site_data">
     <Header :site_data="site_data" />
     <router-view :site_data="site_data" />
-    <Footer />
+    <Footer :site_data="site_data" />
     <ModalMessage />
 </div>
 </template>
@@ -111,12 +111,17 @@ export default {
         });
         me.$bus.$on('triggerSessionUpdate', this.get_session);
         this.get_page_data(this.$route.fullPath);
+        $(window).on('resize', function(e)
+        {
+            me.$bus.$emit('onWindowResize', $(window).width());
+        });
     },
     mounted() {
         let me = this;
     },
     beforeDestory() {
         this.$bus.$off('triggerSessionUpdate');
+        $(window).unbind('resize');
     },
     methods: {
         get_session() {

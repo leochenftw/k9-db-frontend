@@ -198,4 +198,20 @@ export default {
         margin: 0;
     }
 }
+
+.VueCarousel {
+    &-navigation {
+        &-button {
+            font-size: 36px;
+            &.VueCarousel-navigation-prev {
+                transform: translate(25%, -50%) !important;
+            }
+
+            &.VueCarousel-navigation-next {
+                transform: translate(-25%, -50%) !important;
+            }
+        }
+    }
+}
+
 </style>

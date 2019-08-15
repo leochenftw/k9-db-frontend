@@ -1,12 +1,12 @@
 <template>
-    <div class="section">
-        <div class="container">
-            <h2 class="title is-4"><span>赛事新闻活动</span> <router-link to="/news">更多</router-link></h2>
-            <div class="columns">
-                <NewsItemGrid :grid_size="'is-half'" :source="item" :key="key" v-for="item,key in list" />
-            </div>
+<div class="section">
+    <div class="container">
+        <h2 class="title is-4"><span>赛事新闻活动</span> <router-link to="/news">更多</router-link></h2>
+        <div class="columns">
+            <NewsItemGrid :grid_size="'is-half'" :source="item" :key="key" v-for="item,key in list" />
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -20,6 +20,7 @@ export default
 </script>
 <style lang="scss" scoped>
 .section {
+    padding-bottom: 0;
     h2.title {
         margin-bottom: 24px;
         border-bottom: 1px solid #f0e2d0;

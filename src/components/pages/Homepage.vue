@@ -1,8 +1,8 @@
 <template>
 <div class="page">
-    <carousel v-if="site_data.carousel" :autoplay="true" :autoplayTimeout="3000" :autoplayHoverPause="true" :perPage="1"
+    <Carousel v-if="site_data.carousel" :autoplay="true" :autoplayTimeout="3000" :autoplayHoverPause="true" :perPage="1"
               :navigationEnabled="true" :loop=true :paginationEnabled="false" class="home-promo-carousel">
-        <slide v-for="item, i in site_data.carousel" :key="i" class="home-promo-carousel__item">
+        <Slide v-for="item, i in site_data.carousel" :key="i" class="home-promo-carousel__item">
             <!-- <div class="home-promo-carousel__item__bg" :style="'background-image: url(' + item.image.url + ')'"></div> -->
             <img class="home-promo-carousel__item__image" :src="item.image.url" />
             <div class="container">
@@ -18,8 +18,8 @@
                 <p v-if="item.dates.start"><span class="date-label">从</span> <span class="date-text">{{item.dates.start}}</span></p>
                 <p v-if="item.dates.end"><span class="date-label">至</span> <span class="date-text">{{item.dates.end}}</span></p>
             </div>
-        </slide>
-    </carousel>
+        </Slide>
+    </Carousel>
     <ThumbnailStripe />
     <ThumbnailStripe :title="'最新视频'" :itemPrePage="5" />
     <Ads v-if="mid_page_ads" :promo="mid_page_ads" />

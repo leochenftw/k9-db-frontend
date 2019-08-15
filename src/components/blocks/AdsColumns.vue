@@ -20,9 +20,12 @@ export default
 }
 </script>
 <style lang="scss" scoped>
-.ads-item {
-    img {
-        display: block;
+.section {
+    padding-top: 0;
+    .ads-item {
+        img {
+            display: block;
+        }
     }
 }
 </style>

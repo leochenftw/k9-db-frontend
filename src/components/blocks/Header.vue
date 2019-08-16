@@ -137,8 +137,7 @@
                 flex-grow: 1;
                 flex-shrink: 1;
                 border: 1px solid $primary-text-brown;
-                .homepage &,
-                .doglistpage & {
+                .homepage & {
                     border-bottom: none;
                 }
                 color: $primary-text-brown;

@@ -18,5 +18,8 @@ export default {
 <style lang="scss" scoped>
 .breadcrumb {
     margin-bottom: 3rem;
+    a {
+        color: #65562D;
+    }
 }
 </style>

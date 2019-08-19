@@ -24,7 +24,11 @@
     <ThumbnailStripe :title="'最新视频'" :itemPrePage="5" />
     <Ads v-if="mid_page_ads" :promo="mid_page_ads" />
     <NewsSection v-if="site_data.news" :list="site_data.news" />
-    <ThumbnailStripe :title="'人才推荐'" :itemPrePage="5" />
+    <div class="section">
+        <div class="container">
+            <PersonnelSection :title="'人才推荐'" :members="site_data.members" more_link="/personnel" />
+        </div>
+    </div>
     <AdsColumns v-if="bottom_page_ads" :promo="bottom_page_ads" />
 </div>
 </template>
@@ -35,6 +39,7 @@ import ThumbnailStripe from '@/components/blocks/ThumbnailStripe';
 import Ads from '@/components/blocks/Ads';
 import NewsSection from '@/components/blocks/NewsSection';
 import AdsColumns from '@/components/blocks/AdsColumns';
+import PersonnelSection from '@/components/blocks/PersonnelSection';
 export default
 {
     name        :   'Homepage',
@@ -45,7 +50,8 @@ export default
         ThumbnailStripe,
         Ads,
         NewsSection,
-        AdsColumns
+        AdsColumns,
+        PersonnelSection
     },
     computed    :   {
         mid_page_ads()

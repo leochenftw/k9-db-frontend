@@ -30,6 +30,10 @@
             itemPrePage: {
                 type: Number,
                 default: 5
+            },
+            show_more: {
+                type: Boolean,
+                default: true
             }
         }
     }
@@ -42,6 +46,9 @@
 
 .VueCarousel-slide {
     padding: 10px;
+    .doglistpage & {
+        padding: 0;
+    }
 }
 
 .thumbnail-stripe {

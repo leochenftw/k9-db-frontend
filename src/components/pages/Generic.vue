@@ -44,13 +44,17 @@
                         <div class="content" v-html="site_data.content"></div>
                     </div>
                 </article>
-                <NewsSection v-if="site_data.siblings && site_data.siblings.length > 0" :list="site_data.siblings" />
+                <NewsSection v-if="site_data.siblings && site_data.siblings.length > 0" :list="site_data.siblings" :show_no_more="true" />
             </template>
             <template v-else>
                 <h1 class="title is-4"><span>{{site_data.title}}</span></h1>
                 <NewsLayout v-if="site_data.news && site_data.news.list" :news="site_data.news" />
                 <DogBreedSection v-if="site_data.breeds && site_data.breeds.list && site_data.pagetype == 'doglistpage'" :breeds="site_data.breeds" />
                 <DogDetailSection v-if="site_data.pagetype == 'dogpage'" :site_data="site_data" />
+                <PersonnelSection
+                    v-if="site_data.pagetype == 'personnelpage'"
+                    :members="site_data.members"
+                />
             </template>
         </div>
     </section>
@@ -65,6 +69,7 @@ import NewsSection from '../blocks/NewsSection';
 import DogBreedSection from '../blocks/DogBreedSection';
 import DogHero from '../blocks/elements/DogHero';
 import DogDetailSection from '../blocks/DogDetailSection';
+import PersonnelSection from '@/components/blocks/PersonnelSection';
 export default {
     name        :   'Generic',
     props       :   ['site_data'],
@@ -76,7 +81,8 @@ export default {
         NewsSection,
         DogBreedSection,
         DogHero,
-        DogDetailSection
+        DogDetailSection,
+        PersonnelSection
     }
 }
 </script>

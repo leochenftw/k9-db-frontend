@@ -1,7 +1,7 @@
 <template>
 <div class="section">
     <div class="container">
-        <h2 class="title is-4"><span>赛事新闻活动</span> <router-link to="/news">更多</router-link></h2>
+        <h2 class="title is-4"><span>赛事新闻活动</span> <router-link v-if="!show_no_more" to="/news">更多</router-link></h2>
         <div class="columns">
             <NewsItemGrid :grid_size="'is-half'" :source="item" :key="key" v-for="item,key in list" />
         </div>
@@ -15,7 +15,7 @@ export default
 {
     name            :   'NewsSection',
     components      :   { NewsItemGrid },
-    props           :   ['list']
+    props           :   ['list', 'show_no_more']
 }
 </script>
 <style lang="scss" scoped>

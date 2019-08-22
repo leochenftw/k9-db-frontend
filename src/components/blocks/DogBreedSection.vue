@@ -1,6 +1,6 @@
 <template>
 <div class="dog-breeds">
-    <div class="columns">
+    <div class="columns is-multiline">
         <BreedTile v-if="breeds.list.length > 0" v-for="item, i in breeds.list" :item="item" :key="i" />
     </div>
     <div class="loading-indicator has-text-centered column is-12" v-if="is_loading"></div>

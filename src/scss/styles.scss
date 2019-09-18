@@ -7,7 +7,7 @@
         'config/animations';
 
 @import "bulma";
-// @import "dist/css/bulma-extensions";
+@import "dist/css/bulma-extensions";
 
 
 .justify-content-centered {
@@ -72,6 +72,14 @@ fieldset {
             color: #371c12;
             padding: 10px 30px;
             height: auto;
+        }
+    }
+}
+
+.field {
+    &.nowrap {
+        label {
+            user-select: none;
         }
     }
 }

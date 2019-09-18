@@ -1,5 +1,5 @@
 <template>
-<router-link :to="link" class="thumbnail-holder is-block">
+<router-link v-if="link" :to="link" class="thumbnail-holder is-block">
     <figure class="thumbnail">
         <img class="thumbnail__image" :src="image" alt="placeholder" width="218" height="165">
         <figcaption class="thumbnail__viewed">
@@ -7,9 +7,20 @@
         </figcaption>
     </figure>
     <div class="thumbnail__member">
-        <img src="@/assets/ico-account-lite.svg" /> <span>{{title}}</span>
+        <img v-if="show_icon" src="@/assets/ico-account-lite.svg" /> <span>{{title}}</span>
     </div>
 </router-link>
+<a v-else class="thumbnail-holder is-block">
+    <figure class="thumbnail">
+        <img class="thumbnail__image" :src="image" alt="placeholder" width="218" height="165">
+        <figcaption class="thumbnail__viewed">
+            <span class="icon"><i class="fas fa-eye"></i></span> {{viewed}}
+        </figcaption>
+    </figure>
+    <div class="thumbnail__member">
+        <img v-if="show_icon" src="@/assets/ico-account-lite.svg" /> <span>{{title}}</span>
+    </div>
+</a>
 </template>
 
 <script>
@@ -31,7 +42,11 @@ export default
         },
         link    :   {
             type    :   String,
-            default :   '/'
+            default :   undefined
+        },
+        show_icon   :   {
+            type    :   Boolean,
+            default :   true
         }
     }
 }

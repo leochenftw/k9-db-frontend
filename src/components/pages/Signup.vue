@@ -109,7 +109,7 @@ export default {
         error_handler(error) {
             this.smsing     =   false;
             this.is_loading =   false;
-            this.$bus.$emit('Msgbox', error.response.data, null, 'danger');
+            this.$bus.$emit('Msgbox', error.response.data.message, null, 'danger');
         },
         ticking_down() {
             let me          =   this;

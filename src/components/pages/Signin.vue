@@ -183,7 +183,7 @@ export default {
                 me.$router.push('/member');
             }).catch((error) => {
                 me.is_loading   =   false;
-                me.$bus.$emit('Msgbox', error.response.data, null, 'danger');
+                me.$bus.$emit('Msgbox', error.response.data.message, null, 'danger');
             });
         },
         fetch_validation_key(e) {

@@ -9,7 +9,7 @@
         <div class="content" v-html="source.description"></div>
         <div class="member-photo-entry__photos columns is-variable is-2 is-multiline is-mobile">
             <div class="column is-4 member-photo-entry__photo" v-for="(photo, i) in source.photos">
-                <a :href="base_url + photo.url" :data-lightbox="date_label(source.date)"><img :src="base_url + photo.thumb.replace(/ /gi, '%20')" /></a>
+                <a :href="photo.url" :data-lightbox="date_label(source.date)"><img :src="photo.thumb.replace(/ /gi, '%20')" /></a>
             </div>
         </div>
         <p class="subtitle is-6" v-if="source.category">标签: <em>{{source.category}}</em></p>

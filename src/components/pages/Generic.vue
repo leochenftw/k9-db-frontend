@@ -23,6 +23,7 @@
                 :title="site_data.title"
                 v-if="site_data.pagetype != 'doglistpage'"
             />
+            <MemberDetails v-if="site_data.pagetype == 'member-preview'" :details="site_data.targeted_member" />
             <template v-if="site_data.pagetype == 'newitempage'">
                 <div class="columns">
                     <div class="column">
@@ -46,7 +47,7 @@
                 </article>
                 <NewsSection v-if="site_data.siblings && site_data.siblings.length > 0" :list="site_data.siblings" :show_no_more="true" />
             </template>
-            <template v-else>
+            <template v-else-if="site_data.pagetype != 'member-preview'">
                 <h1 class="title is-4"><span>{{site_data.title}}</span></h1>
                 <NewsLayout v-if="site_data.news && site_data.news.list" :news="site_data.news" />
                 <DogBreedSection v-if="site_data.breeds && site_data.breeds.list && site_data.pagetype == 'doglistpage'" :breeds="site_data.breeds" />
@@ -55,6 +56,9 @@
                     v-if="site_data.pagetype == 'personnelpage'"
                     :members="site_data.members"
                 />
+            </template>
+            <template v-else>
+
             </template>
         </div>
     </section>
@@ -70,6 +74,7 @@ import DogBreedSection from '../blocks/DogBreedSection';
 import DogHero from '../blocks/elements/DogHero';
 import DogDetailSection from '../blocks/DogDetailSection';
 import PersonnelSection from '@/components/blocks/PersonnelSection';
+import MemberDetails from '../blocks/MemberDetails';
 export default {
     name        :   'Generic',
     props       :   ['site_data'],
@@ -82,7 +87,8 @@ export default {
         DogBreedSection,
         DogHero,
         DogDetailSection,
-        PersonnelSection
+        PersonnelSection,
+        MemberDetails
     }
 }
 </script>

@@ -21,7 +21,7 @@
     <div class="column bulk-uploader__images">
         <div class="columns is-variable is-1 is-mobile is-multiline bulk-uploader__images__existing">
             <div class="column is-4" v-for="(photo, i) in existing">
-                <a class="preview-canvas-holder" :style="'background-image: url(' + base_url + photo.thumb + ')'" :data-lightbox="$parent.dog_name" :href="base_url + photo.url"></a>
+                <a class="preview-canvas-holder" :style="'background-image: url(' + photo.thumb + ')'" :data-lightbox="$parent.dog_name" :href="photo.url"></a>
                 <button class="delete preview-canvas-delete" @click="purge(photo.id, $event)"></button>
             </div>
             <div class="column is-relative is-4" v-for="(file, i) in files">

@@ -17,8 +17,8 @@
                                     </router-link>
                                 </li>
                                 <li>
-                                    <router-link :to="{ path: '/member/breed'}">
-                                        <span class="ico"><img src="@/assets/ico-breed.svg"/></span>繁殖信息
+                                    <router-link :to="{ path: '/member/dog'}">
+                                        <span class="ico"><img src="@/assets/ico-breed.svg"/></span>犬只管理
                                     </router-link>
                                 </li>
                                 <li>
@@ -60,7 +60,7 @@
                                 <FormPassword v-if="$route.fullPath == '/member/security'"/>
                             </transition>
                             <transition name="fade">
-                                <BreedSection v-if="$route.fullPath == '/member/breed'"/>
+                                <BreedSection v-if="$route.fullPath == '/member/dog'"/>
                             </transition>
                             <transition name="fade">
                                 <FormPuppy v-if="is_puppy_form"/>
@@ -129,303 +129,336 @@
     }
 </script>
 <style lang="scss">
-    .form-container {
-        position: relative;
+h2.title,
+h1.title {
+    display: flex;
+    align-items: center;
+    .ico {
+        display: block;
+        margin-right: 0.5em;
+        img {
+            display: block;
+        }
     }
 
-    .cropper {
-        position: relative;
-        &-container {
-            direction: ltr;
-            font-size: 0;
-            line-height: 0;
-            touch-action: none;
-            user-select: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+    .button {
+        margin-left: 1em;
+    }
+}
 
-            img {
+.menu-list {
+    li {
+        a {
+            display: flex;
+            align-items: center;
+            .ico {
                 display: block;
-                height: 100%;
-                image-orientation: 0deg;
-                max-height: none !important;
-                max-width: none !important;
-                min-height: 0 !important;
-                min-width: 0 !important;
-                width: 100%;
+                margin-right: 0.5em;
+                img {
+                    display: block;
+                }
             }
         }
+    }
+}
 
-        &-wrap-box,
-        &-canvas,
-        &-drag-box,
-        &-crop-box,
-        &-modal {
-            bottom: 0;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
+.form-container {
+    position: relative;
+}
 
-        &-wrap-box,
-        &-canvas {
-            overflow: hidden;
-        }
+.cropper {
+    position: relative;
+    &-container {
+        direction: ltr;
+        font-size: 0;
+        line-height: 0;
+        touch-action: none;
+        user-select: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 
-        &-drag-box {
-            background-color: #fff;
-            opacity: 0;
-        }
-
-        &-modal {
-            background-color: #000;
-            opacity: .5;
-        }
-
-        &-view-box {
+        img {
             display: block;
             height: 100%;
-            // outline-color: rgba(51, 153, 255, 0.75);
-            // outline: 1px solid #39f;
-            overflow: hidden;
+            image-orientation: 0deg;
+            max-height: none !important;
+            max-width: none !important;
+            min-height: 0 !important;
+            min-width: 0 !important;
             width: 100%;
-            border-radius: 50%;
-            border: 1px solid #39f;
         }
+    }
 
-        &-dashed {
-            border: 0 dashed #eee;
-            display: block;
-            opacity: .5;
-            position: absolute;
+    &-wrap-box,
+    &-canvas,
+    &-drag-box,
+    &-crop-box,
+    &-modal {
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 
-            &.dashed-h {
-                border-bottom-width: 1px;
-                border-top-width: 1px;
-                height: calc(100% / 3);
-                left: 0;
-                top: calc(100% / 3);
-                width: 100%;
-            }
+    &-wrap-box,
+    &-canvas {
+        overflow: hidden;
+    }
 
-            &.dashed-v {
-                border-left-width: 1px;
-                border-right-width: 1px;
-                height: 100%;
-                left: calc(100% / 3);
-                top: 0;
-                width: calc(100% / 3);
-            }
-        }
+    &-drag-box {
+        background-color: #fff;
+        opacity: 0;
+    }
 
-        &-center {
-            display: block;
-            height: 0;
-            left: 50%;
-            opacity: .75;
-            position: absolute;
-            top: 50%;
-            width: 0;
+    &-modal {
+        background-color: #000;
+        opacity: .5;
+    }
 
-            &:before,
-            &:after {
-                background-color: #eee;
-                content: ' ';
-                display: block;
-                position: absolute;
-            }
+    &-view-box {
+        display: block;
+        height: 100%;
+        // outline-color: rgba(51, 153, 255, 0.75);
+        // outline: 1px solid #39f;
+        overflow: hidden;
+        width: 100%;
+        border-radius: 50%;
+        border: 1px solid #39f;
+    }
 
-            &:before {
-                height: 1px;
-                left: -3px;
-                top: 0;
-                width: 7px;
-            }
+    &-dashed {
+        border: 0 dashed #eee;
+        display: block;
+        opacity: .5;
+        position: absolute;
 
-            &:after {
-                height: 7px;
-                left: 0;
-                top: -3px;
-                width: 1px;
-            }
-        }
-
-        &-face,
-        &-line,
-        &-point {
-            display: block;
-            height: 100%;
-            opacity: .1;
-            position: absolute;
-            width: 100%;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        &-face {
-            background-color: #fff;
+        &.dashed-h {
+            border-bottom-width: 1px;
+            border-top-width: 1px;
+            height: calc(100% / 3);
             left: 0;
+            top: calc(100% / 3);
+            width: 100%;
+        }
+
+        &.dashed-v {
+            border-left-width: 1px;
+            border-right-width: 1px;
+            height: 100%;
+            left: calc(100% / 3);
             top: 0;
+            width: calc(100% / 3);
+        }
+    }
+
+    &-center {
+        display: block;
+        height: 0;
+        left: 50%;
+        opacity: .75;
+        position: absolute;
+        top: 50%;
+        width: 0;
+
+        &:before,
+        &:after {
+            background-color: #eee;
+            content: ' ';
+            display: block;
+            position: absolute;
         }
 
-        &-line {
-            background-color: #39f;
-
-            &.line-e {
-                cursor: ew-resize;
-                right: -3px;
-                top: 0;
-                width: 5px;
-            }
-
-            &.line-n {
-                cursor: ns-resize;
-                height: 5px;
-                left: 0;
-                top: -3px;
-            }
-
-            &.line-w {
-                cursor: ew-resize;
-                left: -3px;
-                top: 0;
-                width: 5px;
-            }
-
-            &.line-s {
-                bottom: -3px;
-                cursor: ns-resize;
-                height: 5px;
-                left: 0;
-            }
+        &:before {
+            height: 1px;
+            left: -3px;
+            top: 0;
+            width: 7px;
         }
 
-        &-point {
-            background-color: #39f;
-            height: 5px;
-            opacity: .75;
+        &:after {
+            height: 7px;
+            left: 0;
+            top: -3px;
+            width: 1px;
+        }
+    }
+
+    &-face,
+    &-line,
+    &-point {
+        display: block;
+        height: 100%;
+        opacity: .1;
+        position: absolute;
+        width: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    &-face {
+        background-color: #fff;
+        left: 0;
+        top: 0;
+    }
+
+    &-line {
+        background-color: #39f;
+
+        &.line-e {
+            cursor: ew-resize;
+            right: -3px;
+            top: 0;
             width: 5px;
-
-            &.point-e {
-                cursor: ew-resize;
-                margin-top: -3px;
-                right: -3px;
-                top: 50%;
-            }
-
-            &.point-n {
-                cursor: ns-resize;
-                left: 50%;
-                margin-left: -3px;
-                top: -3px;
-            }
-
-            &.point-w {
-                cursor: ew-resize;
-                left: -3px;
-                margin-top: -3px;
-                top: 50%;
-            }
-
-            &.point-s {
-                bottom: -3px;
-                cursor: s-resize;
-                left: 50%;
-                margin-left: -3px;
-            }
-
-            &.point-ne {
-                cursor: nesw-resize;
-                right: -3px;
-                top: -3px;
-            }
-
-            &.point-nw {
-                cursor: nwse-resize;
-                left: -3px;
-                top: -3px;
-            }
-
-            &.point-sw {
-                bottom: -3px;
-                cursor: nesw-resize;
-                left: -3px;
-            }
-
-            &.point-se {
-                bottom: -3px;
-                cursor: nwse-resize;
-                height: 20px;
-                opacity: 1;
-                right: -3px;
-                width: 20px;
-
-                @media (min-width: 768px) {
-                    height: 15px;
-                    width: 15px;
-                }
-
-                @media (min-width: 992px) {
-                    height: 10px;
-                    width: 10px;
-                }
-
-                @media (min-width: 1200px) {
-                    height: 5px;
-                    opacity: .75;
-                    width: 5px;
-                }
-            }
-
-            &.point-se:before {
-                background-color: #39f;
-                bottom: -50%;
-                content: ' ';
-                display: block;
-                height: 200%;
-                opacity: 0;
-                position: absolute;
-                right: -50%;
-                width: 200%;
-            }
         }
 
-        &-invisible {
-            opacity: 0;
+        &.line-n {
+            cursor: ns-resize;
+            height: 5px;
+            left: 0;
+            top: -3px;
         }
 
-        &-bg {
-            background-image: url('../../assets/bg.png');
+        &.line-w {
+            cursor: ew-resize;
+            left: -3px;
+            top: 0;
+            width: 5px;
         }
 
-        &-hide {
-            display: block;
-            height: 0;
-            position: absolute;
-            width: 0;
-        }
-
-        &-hidden {
-            display: none !important;
-        }
-
-        &-move {
-            cursor: move;
-        }
-
-        &-crop {
-            cursor: crosshair;
-        }
-
-        &-disabled &-drag-box,
-        &-disabled &-face,
-        &-disabled &-line,
-        &-disabled &-point {
-            cursor: not-allowed;
+        &.line-s {
+            bottom: -3px;
+            cursor: ns-resize;
+            height: 5px;
+            left: 0;
         }
     }
+
+    &-point {
+        background-color: #39f;
+        height: 5px;
+        opacity: .75;
+        width: 5px;
+
+        &.point-e {
+            cursor: ew-resize;
+            margin-top: -3px;
+            right: -3px;
+            top: 50%;
+        }
+
+        &.point-n {
+            cursor: ns-resize;
+            left: 50%;
+            margin-left: -3px;
+            top: -3px;
+        }
+
+        &.point-w {
+            cursor: ew-resize;
+            left: -3px;
+            margin-top: -3px;
+            top: 50%;
+        }
+
+        &.point-s {
+            bottom: -3px;
+            cursor: s-resize;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        &.point-ne {
+            cursor: nesw-resize;
+            right: -3px;
+            top: -3px;
+        }
+
+        &.point-nw {
+            cursor: nwse-resize;
+            left: -3px;
+            top: -3px;
+        }
+
+        &.point-sw {
+            bottom: -3px;
+            cursor: nesw-resize;
+            left: -3px;
+        }
+
+        &.point-se {
+            bottom: -3px;
+            cursor: nwse-resize;
+            height: 20px;
+            opacity: 1;
+            right: -3px;
+            width: 20px;
+
+            @media (min-width: 768px) {
+                height: 15px;
+                width: 15px;
+            }
+
+            @media (min-width: 992px) {
+                height: 10px;
+                width: 10px;
+            }
+
+            @media (min-width: 1200px) {
+                height: 5px;
+                opacity: .75;
+                width: 5px;
+            }
+        }
+
+        &.point-se:before {
+            background-color: #39f;
+            bottom: -50%;
+            content: ' ';
+            display: block;
+            height: 200%;
+            opacity: 0;
+            position: absolute;
+            right: -50%;
+            width: 200%;
+        }
+    }
+
+    &-invisible {
+        opacity: 0;
+    }
+
+    &-bg {
+        background-image: url('../../assets/bg.png');
+    }
+
+    &-hide {
+        display: block;
+        height: 0;
+        position: absolute;
+        width: 0;
+    }
+
+    &-hidden {
+        display: none !important;
+    }
+
+    &-move {
+        cursor: move;
+    }
+
+    &-crop {
+        cursor: crosshair;
+    }
+
+    &-disabled &-drag-box,
+    &-disabled &-face,
+    &-disabled &-line,
+    &-disabled &-point {
+        cursor: not-allowed;
+    }
+}
 </style>

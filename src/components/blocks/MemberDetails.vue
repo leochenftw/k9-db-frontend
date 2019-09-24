@@ -50,7 +50,7 @@
     <div class="tabs is-large">
         <ul>
             <li :class="{'is-active' : current_tab == 'puppy'}"><a @click.prevent="current_tab = 'puppy'">幼犬信息</a></li>
-            <li :class="{'is-active' : current_tab == 'breed'}"><a @click.prevent="current_tab = 'breed'">交配信息</a></li>
+            <li :class="{'is-active' : current_tab == 'breed'}"><a @click.prevent="current_tab = 'breed'">繁殖信息</a></li>
             <li :class="{'is-active' : current_tab == 'photo'}"><a @click.prevent="current_tab = 'photo'">照片展示</a></li>
             <li :class="{'is-active' : current_tab == 'video'}"><a @click.prevent="current_tab = 'video'">视频展示</a></li>
         </ul>

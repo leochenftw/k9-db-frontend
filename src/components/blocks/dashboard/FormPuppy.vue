@@ -1,6 +1,15 @@
 <template>
 <form id="member-form-puppy" method="post" @submit.prevent="submit">
-    <h2 class="title is-5"><a class="button is-info is-small" @click.prevent="$router.go(-1);">返回</a> <template v-if="$route.params.id">编辑</template><template v-else>添加</template>犬只信息</h2>
+    <h2 class="title is-5">
+        <a class="button is-info is-small" @click.prevent="$router.go(-1);">返回</a>
+        <template v-if="$route.params.id">编辑</template><template v-else>添加</template>犬只信息
+        <template v-if="$route.params.id && raw_data"><i></i>
+            <button v-if="!raw_data.breed_notice" @click.prevent="post_notice('breed')" :class="['button is-text', {'is-loading': publishing_breed}]">发布繁殖信息</button>
+            <button v-else @click.prevent="withdraw_notice('breed')" :class="['button is-text', {'is-loading': publishing_breed}]">撤回繁殖信息</button>
+            <button v-if="!raw_data.trade_notice" @click.prevent="post_notice('trade')" :class="['button is-text', {'is-loading': publishing_trade}]">发布幼犬信息</button>
+            <button v-else @click.prevent="withdraw_notice('trade')" :class="['button is-text', {'is-loading': publishing_trade}]">撤回幼犬信息</button>
+        </template>
+    </h2>
     <BulkUploader :allowed_types="'.jpg,.jpeg,.png'" :endpoint="'dog'" :existing="dog_photos" />
     <h2 class="title is-5">基本信息</h2>
     <div class="columns is-multiline">
@@ -158,6 +167,9 @@ export default
     components  :   { BulkUploader, ToggleUploader },
     data()  {
         return  {
+            raw_data        :   null,
+            publishing_breed:   false,
+            publishing_trade:   false,
             is_loading      :   false,
             dog_id          :   this.$route.params.id,
             dog_name        :   null,
@@ -283,6 +295,7 @@ export default
             }
         },
         prep(resp) {
+            this.raw_data       =   resp.data;
             this.dog_id         =   resp.data.id;
             this.dog_name       =   resp.data.title;
             this.awards         =   resp.data.content;
@@ -338,6 +351,46 @@ export default
                 ).then(this.prep);
             }
         },
+        post_notice(type)
+        {
+            if (this.publishing_breed) return false;
+
+            if (confirm('您将要发布一条' + (type == 'breed' ? '繁殖' : '幼犬') + '信息 - 确定?')) {
+                this.publishing_breed   =   true;
+                axios.post(
+                    base_url + endpoints.dog + '/' + this.dog_id + '/post_' + type + '_notice'
+                ).then((resp) => {
+                    this.publishing_breed   =   false;
+                    if (type == 'breed') {
+                        this.raw_data.breed_notice  =   !this.raw_data.breed_notice;
+                    } else {
+                        this.raw_data.trade_notice  =   !this.raw_data.trade_notice;
+                    }
+                }).catch((error) => {
+                    this.publishing_breed   =   false;
+                });
+            }
+        },
+        withdraw_notice(type)
+        {
+            if (this.publishing_trade) return false;
+
+            if (confirm('您即将撤回' + (type == 'breed' ? '繁殖' : '幼犬') + '信息 - 确定?')) {
+                this.publishing_trade   =   true;
+                axios.post(
+                    base_url + endpoints.dog + '/' + this.dog_id + '/withdraw_' + type + '_notice'
+                ).then((resp) => {
+                    this.publishing_trade   =   false;
+                    if (type == 'breed') {
+                        this.raw_data.breed_notice  =   !this.raw_data.breed_notice;
+                    } else {
+                        this.raw_data.trade_notice  =   !this.raw_data.trade_notice;
+                    }
+                }).catch((error) => {
+                    this.publishing_trade   =   false;
+                });
+            }
+        },
         submit(e) {
             if (e) {
                 e.preventDefault();
@@ -382,7 +435,6 @@ export default
                 }));
             }
 
-
             if (this.dog_cert.delete)  {
                 data.append('delete_dog_cert', true);
             }
@@ -403,6 +455,23 @@ export default
 </script>
 
 <style lang="scss" scoped>
+h2.title {
+    display: flex;
+    align-items: center;
+    .button.is-info {
+        margin-right: 1em;
+    }
+
+    i {
+        display: block;
+        &:before {
+            content: '|';
+            font-weight: normal;
+        }
+        font-style: normal;
+        margin: 0 0.5em;
+    }
+}
 .control {
     &.has-condidate {
         position: relative;

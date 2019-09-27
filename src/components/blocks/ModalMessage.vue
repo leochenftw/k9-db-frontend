@@ -60,7 +60,8 @@ export default {
             }
 
             if (show_cancel) {
-                this.buttons.no.show = true;
+                this.buttons.no.show    =   true;
+                this.buttons.no.label   =   show_cancel.label;
             }
 
             if (type) {

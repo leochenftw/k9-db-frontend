@@ -4,7 +4,7 @@
     <div class="columns">
         <div class="column" v-for="item, i in members">
             <Thumbnail
-                :image="item.portrait.url"
+                :image="item.portrait ? item.portrait.url : require('@/assets/placeholder.png')"
                 :viewed="item.viewed"
                 :title="item.nickname"
                 :link="item.link"

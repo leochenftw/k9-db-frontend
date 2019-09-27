@@ -15,6 +15,7 @@
 export default
 {
     name    :   'Signout',
+    props   :   ['site_data'],
     data() {
         return  {
             is_loading  :   false
@@ -41,3 +42,8 @@ export default
     }
 }
 </script>
+<style lang="scss" scoped>
+h1.title {
+    display: block !important;
+}
+</style>

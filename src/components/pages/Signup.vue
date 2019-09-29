@@ -3,18 +3,18 @@
         <div class="container">
             <div class="columns">
                 <div class="column left-col is-4 is-offset-1">
-                    <h1 class="title is-5">欢迎加入我爱工作犬</h1>
+                    <h1 :class="['title', 'is-' + (using_large ? '2' : '5')]">欢迎加入我爱工作犬</h1>
                     <form method="post" @submit.prevent="prevented_submit">
                         <fieldset :disabled="is_loading">
                             <div class="field">
                                 <div class="control">
-                                    <input type="email" placeholder="电子邮箱地址" :class="['input', { 'is-danger' : errors.email }]" v-model="email" />
+                                    <input type="email" placeholder="电子邮箱地址" :class="['input', { 'is-danger' : errors.email }, { 'is-large' : using_large }]" v-model="email" />
                                 </div>
                                 <p class="help is-danger" v-if="errors.email">请输入电子邮箱地址</p>
                             </div>
                             <div class="field">
                                 <div class="control has-icons-right">
-                                    <input :type="show_pass ? 'text' : 'password' " placeholder="密码" :class="['input', { 'is-danger' : errors.password }]" v-model="password" />
+                                    <input :type="show_pass ? 'text' : 'password' " placeholder="密码" :class="['input', { 'is-danger' : errors.password }, { 'is-large' : using_large }]" v-model="password" />
                                     <span @click="show_pass = !show_pass" class="icon is-small is-right enabled">
                                         <i :class="['fas', { 'fa-eye-slash' : !show_pass, 'fa-eye' : show_pass }]"></i>
                                     </span>
@@ -23,7 +23,7 @@
                             </div>
                             <div class="field">
                                 <div class="control">
-                                    <button ref="captcha" type="submit" :class="['is-primary button is-fullwidth', {'is-loading': is_loading}]">注册</button>
+                                    <button ref="captcha" type="submit" :class="['is-primary button is-fullwidth', {'is-loading': is_loading}, { 'is-large' : using_large }]">注册</button>
                                 </div>
                             </div>
                         </fieldset>
@@ -58,7 +58,8 @@ export default {
             errors          :   {
                 email       :   false,
                 password    :   false
-            }
+            },
+            using_large     :   true
         }
     },
     created()
@@ -78,9 +79,17 @@ export default {
             this.ticking_down();
         }
 
+        this.$bus.$on('onWindowResize', (width) => {
+            this.using_large    =   width >= 1216;
+        });
+
         this.$nextTick().then(() => {
             new TencentCaptcha(this.$refs.captcha, this.site_data.appid, this.submit);
+            $(window).resize();
         });
+    },
+    beforeDestroy() {
+        this.$bus.$off('onWindowResize');
     },
     methods :   {
         error_handler(error) {
@@ -156,6 +165,7 @@ export default {
             e.preventDefault();
         },
         submit(ticket) {
+            if (!ticket.ticket) return false;
             if (this.is_loading) return false;
             this.is_loading =   true;
             let data    =   new FormData(),

@@ -2,6 +2,14 @@
     <transition name="fade">
         <div class="section" v-if="checked">
             <div class="container">
+                <div v-if="site_data && site_data.pending_activation" class="notification is-warning content">
+                    <p>您的账户尚未激活. 我们已经向您的注册邮箱发送了一封含有激活链接的邮件, 请注意查收, 并按照邮件内容的指引, 完成帐号的激活. 未激活的帐号将于<strong style="font-size:1.5rem;">3天后</strong>自动删除, 所以请尽快完成激活.</p>
+                    <p v-if="resending">邮件发送中...</p>
+                    <template v-else>
+                        <p v-if="!resend_retry">没有收到邮件? <a ref="captcha" @click.prevent="1 == 1">点击重新发送</a></p>
+                        <p v-else>邮件已发送. 重试请等待{{resend_retry}}秒...</p>
+                    </template>
+                </div>
                 <div class="columns">
                     <div class="column is-3">
                         <aside class="menu">
@@ -90,20 +98,39 @@
     export default {
         name: 'Dashboard',
         components: {FormBasic, BreedSection, FormPassword, FormPuppy, PhotoSection, VideoSection},
+        props   :   ['site_data'],
         data () {
             return {
                 member_type: 'normal',
-                checked: false
+                checked: false,
+                enterframe: null,
+                resend_retry: 0,
+                resending: false
             }
         },
         watch: {
             $route (to, from) {
                 this.check_member();
+            },
+            resend_retry(nv, ov) {
+                if (nv == 0) {
+                    this.$nextTick().then(() => {
+                        new TencentCaptcha(this.$refs.captcha, this.site_data.appid, this.resend_activation);
+                    });
+                }
             }
         },
         computed: {
             is_puppy_form () {
                 return this.$route.params.section && this.$route.params.section == 'breed' && this.$route.params.action;
+            }
+        },
+        mounted() {
+            if (localStorage.resend_retry && localStorage.resend_retry > 0) {
+                this.resend_retry   =   localStorage.resend_retry;
+                this.ticking_down();
+            } else {
+                delete localStorage.resend_retry;
             }
         },
         methods: {
@@ -114,6 +141,12 @@
                 this.$nextTick().then(() => {
                     me.$bus.$emit('onMembercheckedout', resp);
                 });
+
+                this.$nextTick().then(() => {
+                    if (this.$refs.captcha) {
+                        new TencentCaptcha(this.$refs.captcha, this.site_data.appid, this.resend_activation);
+                    }
+                });
             },
             error_handler (error) {
                 this.$bus.$emit('Msgbox', error.response.data.message, {label: '前往登录页面', link: '/signin'}, 'danger');
@@ -121,6 +154,46 @@
             check_member () {
                 axios.get(base_url + endpoints.member)
                     .then(this.prep).catch(this.error_handler);
+            },
+            ticking_down() {
+                let me  =   this;
+                if (!this.enterframe) {
+                    this.enterframe =   setInterval(() => {
+                        me.resend_retry--;
+                        localStorage.resend_retry  =   me.resend_retry;
+                        if (me.resend_retry == 0) {
+                            clearInterval(me.enterframe);
+                            me.enterframe               =   null;
+                            me.resend_retry             =   0;
+                            delete localStorage.resend_retry;
+                        }
+                    }, 1000);
+                }
+            },
+            resend_activation(ticket)
+            {
+                if (!ticket.ticket) return false;
+                if (this.resending) return false;
+                this.resending = true;
+
+                let data    =   new FormData();
+                data.append('csrf', csrf);
+                data.append('randstr', ticket.randstr);
+                data.append('ticket', ticket.ticket);
+                axios.post(
+                    base_url + endpoints.member + '/resend_activation',
+                    data
+                ).then((resp) => {
+                    this.resending              =   false;
+                    this.resend_retry           =   60;
+                    localStorage.resend_retry   =   this.resend_retry;
+                    this.ticking_down();
+                }).catch((error) => {
+                    this.resending  =   false;
+                    if (error.response && error.response.data && error.response.data.message) {
+                        this.$bus.$emit('Msgbox', error.response.data.message, { label: '好的' }, 'danger');
+                    }
+                });
             }
         },
         created () {

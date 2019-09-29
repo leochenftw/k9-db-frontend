@@ -7,7 +7,7 @@
                 </div>
                 <div class="column right-col is-4 is-offset-1" v-if="recovery">
                     <h1 class="title is-3">免密码登录</h1>
-                    <p class="subtitle is-6">请输入邮箱地址获取登录凭证</p>
+                    <p class="subtitle is-6">请输入邮箱地址获取登录通行证</p>
                     <form v-if="!retry" class="form-recovery" method="post" @submit.prevent="fake_recover">
                         <fieldset :disabled="is_loading">
                             <div class="field">
@@ -20,7 +20,7 @@
                                 <p class="has-text-right"><small><a @click.prevent="recovery = false">我还是使用密码登录吧...</a></small></p>
                             </div>
                             <div class="field">
-                                <button ref="captcha" type="submit" :class="['button is-fullwidth is-primary', { 'is-loading' : is_loading }]">获取凭证</button>
+                                <button ref="captcha" type="submit" :class="['button is-fullwidth is-primary', { 'is-loading' : is_loading }]">获取通行证</button>
                             </div>
                         </fieldset>
                     </form>
@@ -124,6 +124,7 @@ export default {
             }
         },
         recover(ticket) {
+            if (!ticket.ticket) return false;
             if (this.is_loading) return false;
             this.errors.email  =   false;
             if (!this.email || this.email.trim().length == 0) {
@@ -190,7 +191,7 @@ export default {
                     me.retry--;
                     localStorage.retry  =   me.retry;
                     if (me.retry == 0) {
-                        clearInterval(this.enterframe);
+                        clearInterval(me.enterframe);
                         me.enterframe       =   null;
                         me.retry            =   0;
                         localStorage.retry  =   me.retry;

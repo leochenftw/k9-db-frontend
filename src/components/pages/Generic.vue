@@ -57,8 +57,11 @@
                     :members="site_data.members"
                 />
             </template>
-            <template v-else>
-
+            <template v-if="site_data.pagetype == 'activation'">
+                <article class="content" v-html="site_data.content"></article>
+                <div class="content" v-if="site_data.code && site_data.code == 200">
+                    <p>页面将于{{countdown}}秒后跳转...</p>
+                </div>
             </template>
         </div>
     </section>
@@ -89,6 +92,37 @@ export default {
         DogDetailSection,
         PersonnelSection,
         MemberDetails
+    },
+    data() {
+        return {
+            countdown   :   5
+        }
+    },
+    created()
+    {
+        if (this.site_data && this.site_data.code) {
+            if (this.site_data.code == 403) {
+                this.$router.replace('/');
+                return false;
+            }
+
+            if (this.site_data.code == 200) {
+                this.ticking_down();
+            }
+        }
+    },
+    methods :   {
+        ticking_down()
+        {
+            let me      =   this,
+                tick    =   setInterval(function () {
+                                me.countdown--;
+                                if (me.countdown == 0) {
+                                    clearInterval(tick);
+                                    me.$router.replace('/member');
+                                }
+                            }, 1000);
+        }
     }
 }
 </script>
